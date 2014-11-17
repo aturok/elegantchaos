@@ -18,7 +18,7 @@
 
 (def scalef 100.0)
 
-(def traj
+(defn get-trajectory []
     (->> (iter chua/equations [0.7 0.0 0.0] 0.01 5000)
         (map fnext)
         (map (partial timesvec scalef))))
@@ -29,7 +29,7 @@
   (rotate-y (:y-rotation @sketchstate))
   (rotate-x (:x-rotation @sketchstate))
   (dorun
-    (map #(apply line %) (line-join-points traj))))
+    (map #(apply line %) (line-join-points (:trajectory @sketchstate)))))
 
 (defn add-key [state keycode]
     (assoc state :pressed-keys (conj (:pressed-keys state) keycode)))
@@ -59,4 +59,5 @@
 
 (defn -main
   "I launch sketch"
-  [& args])
+  [& args]
+  (swap! sketchstate assoc :trajectory (get-trajectory)))
