@@ -2,11 +2,13 @@
     (:use [elegantchaos.math])
     (:require [quil.core :refer :all]
               [elegantchaos.examples.chua :as chua]
+              [elegantchaos.examples.chapter2 :as chapter2]
               [quil.helpers.drawing :refer [line-join-points]])
     (:gen-class))
 
 (def examples {
     "chua" {:f chua/equations :x0 [0.7 0.0 0.0]}
+    "chapter2-po4" {:f chapter2/po4 :x0 [5.0 0.0 0.0]}
     })
 
 (defn setup []
