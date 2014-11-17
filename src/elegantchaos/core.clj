@@ -5,6 +5,10 @@
               [quil.helpers.drawing :refer [line-join-points]])
     (:gen-class))
 
+(def examples {
+    "chua" {:f chua/equations :x0 [0.7 0.0 0.0]}
+    })
+
 (defn setup []
   (background 255)
   (stroke 00))
@@ -18,10 +22,11 @@
 
 (def scalef 100.0)
 
-(defn get-trajectory []
-    (->> (iter chua/equations [0.7 0.0 0.0] 0.01 5000)
-        (map fnext)
-        (map (partial timesvec scalef))))
+(defn get-trajectory [example-name]
+    (let [{f :f x0 :x0} (examples example-name)]
+        (->> (iter f x0 0.01 5000)
+            (map fnext)
+            (map (partial timesvec scalef)))))
 
 (defn draw []
   (background 255)
@@ -59,5 +64,5 @@
 
 (defn -main
   "I launch sketch"
-  [& args]
-  (swap! sketchstate assoc :trajectory (get-trajectory)))
+  [example & other-args]
+  (swap! sketchstate assoc :trajectory (get-trajectory example)))
