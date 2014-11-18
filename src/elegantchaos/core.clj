@@ -20,9 +20,8 @@
     :x-rotation-speed 0.05
     :y-rotation 0.0
     :y-rotation-speed 0.05
+    :scale-factor 100.0
         }))
-
-(def scalef 100.0)
 
 (defn get-trajectory [example-name]
     (let [{f :f x0 :x0} (examples example-name)]
@@ -31,9 +30,9 @@
 
 (defn draw []
   (background 255)
-  (stroke-weight (/ 1.0 scalef))
+  (stroke-weight (/ 1.0 (:scale-factor @sketchstate)))
   (translate (/ (width) 2) (/ (height) 2) 5)
-  (scale scalef)
+  (scale (:scale-factor @sketchstate))
   (rotate-y (:y-rotation @sketchstate))
   (rotate-x (:x-rotation @sketchstate))
   (dorun
