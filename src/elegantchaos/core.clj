@@ -27,12 +27,13 @@
 (defn get-trajectory [example-name]
     (let [{f :f x0 :x0} (examples example-name)]
         (->> (iter f x0 0.01 5000)
-            (map fnext)
-            (map (partial timesvec scalef)))))
+            (map fnext))))
 
 (defn draw []
   (background 255)
+  (stroke-weight (/ 1.0 scalef))
   (translate (/ (width) 2) (/ (height) 2) 5)
+  (scale scalef)
   (rotate-y (:y-rotation @sketchstate))
   (rotate-x (:x-rotation @sketchstate))
   (dorun
