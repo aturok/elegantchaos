@@ -21,6 +21,7 @@
     :y-rotation 0.0
     :y-rotation-speed 0.05
     :scale-factor 100.0
+    :scale-step 5.0
         }))
 
 (defn get-trajectory [example-name]
@@ -54,7 +55,9 @@
             (= k :up) (swap! sketchstate aggregate-in :x-rotation + :x-rotation-speed)
             (= k :down) (swap! sketchstate aggregate-in :x-rotation - :x-rotation-speed)
             (= k :left) (swap! sketchstate aggregate-in :y-rotation + :y-rotation-speed)
-            (= k :right) (swap! sketchstate aggregate-in :y-rotation - :y-rotation-speed))))
+            (= k :right) (swap! sketchstate aggregate-in :y-rotation - :y-rotation-speed)
+            (= k :-) (swap! sketchstate aggregate-in :scale-factor - :scale-step)
+            (= k :=) (swap! sketchstate aggregate-in :scale-factor + :scale-step))))
 
 (defsketch trajectory
   :title "Chua"
