@@ -20,6 +20,8 @@
     :x-rotation-speed 0.05
     :y-rotation 0.0
     :y-rotation-speed 0.05
+    :z-rotation 0.0
+    :z-rotation-speed 0.05
     :scale-factor 100.0
     :scale-step 5.0
         }))
@@ -34,6 +36,7 @@
   (stroke-weight (/ 1.0 (:scale-factor @sketchstate)))
   (translate (/ (width) 2) (/ (height) 2) 5)
   (scale (:scale-factor @sketchstate))
+  (rotate-z (:z-rotation @sketchstate))
   (rotate-y (:y-rotation @sketchstate))
   (rotate-x (:x-rotation @sketchstate))
   (dorun
@@ -56,6 +59,8 @@
             (= k :down) (swap! sketchstate aggregate-in :x-rotation - :x-rotation-speed)
             (= k :left) (swap! sketchstate aggregate-in :y-rotation + :y-rotation-speed)
             (= k :right) (swap! sketchstate aggregate-in :y-rotation - :y-rotation-speed)
+            (= k :') (swap! sketchstate aggregate-in :z-rotation + :z-rotation-speed)
+            (= k (keyword "/")) (swap! sketchstate aggregate-in :z-rotation - :z-rotation-speed)
             (= k :-) (swap! sketchstate aggregate-in :scale-factor - :scale-step)
             (= k :=) (swap! sketchstate aggregate-in :scale-factor + :scale-step))))
 
