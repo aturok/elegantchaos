@@ -17,11 +17,9 @@
 
 (def sketchstate (atom {
     :x-rotation 0.0
-    :x-rotation-speed 0.05
     :y-rotation 0.0
-    :y-rotation-speed 0.05
     :z-rotation 0.0
-    :z-rotation-speed 0.05
+    :rotation-speed 0.05
     :scale-factor 100.0
     :scale-step 5.0
         }))
@@ -52,15 +50,18 @@
     (assoc state result-key
         (op (state result-key) (state delta-key))))
 
+(defn rotate-sketch [axis direction]
+    (swap! sketchstate aggregate-in axis direction :rotation-speed))
+
 (defn key-pressed []
     (let [k (key-as-keyword)]
         (cond
-            (= k :up) (swap! sketchstate aggregate-in :x-rotation + :x-rotation-speed)
-            (= k :down) (swap! sketchstate aggregate-in :x-rotation - :x-rotation-speed)
-            (= k :left) (swap! sketchstate aggregate-in :y-rotation + :y-rotation-speed)
-            (= k :right) (swap! sketchstate aggregate-in :y-rotation - :y-rotation-speed)
-            (= k :') (swap! sketchstate aggregate-in :z-rotation + :z-rotation-speed)
-            (= k (keyword "/")) (swap! sketchstate aggregate-in :z-rotation - :z-rotation-speed)
+            (= k :up) (rotate-sketch :x-rotation +)
+            (= k :down) (rotate-sketch :x-rotation -)
+            (= k :left) (rotate-sketch :y-rotation +)
+            (= k :right) (rotate-sketch :y-rotation -)
+            (= k :') (rotate-sketch :z-rotation +)
+            (= k (keyword "/")) (rotate-sketch :z-rotation -)
             (= k :-) (swap! sketchstate aggregate-in :scale-factor - :scale-step)
             (= k :=) (swap! sketchstate aggregate-in :scale-factor + :scale-step))))
 
