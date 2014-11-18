@@ -30,15 +30,23 @@
             (map fnext))))
 
 (defn draw []
-  (background 255)
-  (stroke-weight (/ 1.0 (:scale-factor @sketchstate)))
-  (translate (/ (width) 2) (/ (height) 2) 5)
-  (scale (:scale-factor @sketchstate))
-  (rotate-z (:z-rotation @sketchstate))
-  (rotate-y (:y-rotation @sketchstate))
-  (rotate-x (:x-rotation @sketchstate))
-  (dorun
-    (map #(apply line %) (line-join-points (:trajectory @sketchstate)))))
+    (let [{
+        scale-factor :scale-factor
+        x-rotation :x-rotation
+        y-rotation :y-rotation
+        z-rotation :z-rotation
+        trajectory :trajectory
+        } @sketchstate]
+
+        (background 255)
+        (stroke-weight (/ 1.0 scale-factor))
+        (translate (/ (width) 2) (/ (height) 2) 5)
+        (scale scale-factor)
+        (rotate-z z-rotation)
+        (rotate-y y-rotation)
+        (rotate-x x-rotation)
+        (dorun
+            (map #(apply line %) (line-join-points trajectory)))))
 
 (defn add-key [state keycode]
     (assoc state :pressed-keys (conj (:pressed-keys state) keycode)))
