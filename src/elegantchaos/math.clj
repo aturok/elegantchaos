@@ -30,7 +30,10 @@
 				 			(timesvec 2.0 k3)
 				 			k4)))]))))
 
-(defn iter [f x0 dt n]
-	(let [rk (rk4-samestep f dt)]
-		(take n (iterate rk [0 x0]))))
+(defn iter
+	([f x0 dt n]
+		(iter f x0 0.0 dt n))
+	([f x0 t0 dt n]
+		(let [rk (rk4-samestep f dt)]
+			(take n (iterate rk [t0 x0])))))
 
