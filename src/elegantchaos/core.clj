@@ -20,6 +20,8 @@
     :y-rotation 0.0
     :z-rotation 0.0
     :rotation-speed 0.05
+    :z-position 5.0
+    :z-step 10.0
     :scale-factor 100.0
     :scale-step 5.0
         }))
@@ -35,12 +37,13 @@
         x-rotation :x-rotation
         y-rotation :y-rotation
         z-rotation :z-rotation
+        z-position :z-position
         trajectory :trajectory
         } @sketchstate]
 
         (background 255)
         (stroke-weight (/ 1.0 scale-factor))
-        (translate (/ (width) 2) (/ (height) 2) 5)
+        (translate (/ (width) 2) (/ (height) 2) z-position)
         (scale scale-factor)
         (rotate-z z-rotation)
         (rotate-y y-rotation)
@@ -70,6 +73,8 @@
             (= k :right) (rotate-sketch :y-rotation -)
             (= k :') (rotate-sketch :z-rotation +)
             (= k (keyword "/")) (rotate-sketch :z-rotation -)
+            (= k :w) (swap! sketchstate aggregate-in :z-position + :z-step)
+            (= k :s) (swap! sketchstate aggregate-in :z-position - :z-step)
             (= k :-) (swap! sketchstate aggregate-in :scale-factor - :scale-step)
             (= k :=) (swap! sketchstate aggregate-in :scale-factor + :scale-step))))
 
