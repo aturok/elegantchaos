@@ -8,8 +8,7 @@
 	(<= (Math/abs (- a b)) 0.0001))
 
 (defn valmost= [v1 v2]
-	(every? (partial apply almost=)
-		(map vector v1 v2)))
+	(every? true? (map almost= v1 v2)))
 
 (deftest almost-equal-test
 	(testing "almost= w/ two numbers"
