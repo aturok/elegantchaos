@@ -7,6 +7,9 @@
 (defn timesvec [k v]
 	(map (partial * k) v))
 
+(defn get-point [[t point]]
+	point)
+
 (defn rk4-coeffs [f x t dt]
 	(let [hdt (* 0.5 dt)
 		  k1 (f t x)
