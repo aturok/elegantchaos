@@ -11,6 +11,25 @@
 	(every? (partial apply almost=)
 		(map vector v1 v2)))
 
+(deftest almost-equal-test
+	(testing "almost= w/ two numbers"
+		(is (almost= 0.1 0.1))
+		(is (almost= 0.1 0.1001))
+		(is (almost= 0.1 0.10001))
+		(is (almost= 0.1 0.09991)) ;the difference (- 0.1 0.0999) is a tiny bit more than 0.0001
+		(is (almost= 0.1 0.09999))
+		(is (not (almost= 0.1 0.2)))
+		(is (not (almost= 0.1 0.10011)))
+		(is (not (almost= 0.1 0.0)))
+		(is (not (almost= 0.1 0.099)))
+		(is (not (almost= 100 1000))))
+	(testing "valmost= w/ two vectors"
+		(is (valmost= [0.1 0.2 0.3] [0.1 0.2 0.3]))
+		(is (valmost= [0.1 0.2 0.3] [0.10001 0.20001 0.299999]))
+		(is (not (valmost= [0.1 0.2 0.3] [0.2 0.2 0.3])))
+		(is (not (valmost= [0.1 0.2 0.3] [0.3 0.2 0.1])))
+		(is (not (valmost= [0.1 0.2 0.3] [0.1 0.201 0.3])))))
+
 (deftest rk4-coefficients-checks
   (testing "y' = 1 - t*y at 1.0 with y(0) = 1.0"
     (is (valmost= (map first (rk4-coeffs (juxt ivp) [1.0] 0.0 1.0)) [1.0 0.25 0.4375 -0.4375])))
