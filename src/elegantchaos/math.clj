@@ -1,8 +1,7 @@
 (ns elegantchaos.math)
 
 (defn addvec [& vs]
-	(map (partial reduce +)
-		(apply (partial map vector) vs)))
+	(apply map + vs))
 
 (defn timesvec [k v]
 	(map (partial * k) v))
