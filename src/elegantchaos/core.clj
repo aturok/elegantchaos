@@ -88,7 +88,7 @@
     :setup setup
     :draw draw
     :key-pressed key-pressed
-    :size [1000 600]
+    :size :fullscreen
     :renderer :opengl))
 
 (defn -main
