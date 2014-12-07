@@ -81,13 +81,14 @@
             (= k :-) (swap! sketchstate aggregate-in :scale-factor - :scale-step)
             (= k :=) (swap! sketchstate aggregate-in :scale-factor + :scale-step))))
 
-(defsketch trajectory
-  :title "Chua"
-  :setup setup
-  :draw draw
-  :key-pressed key-pressed
-  :size [1000 600]
-  :renderer :opengl)
+(defn run-sketch [title]
+  (sketch
+    :title title
+    :setup setup
+    :draw draw
+    :key-pressed key-pressed
+    :size [1000 600]
+    :renderer :opengl))
 
 (defn -main
   "I launch sketch"
@@ -95,4 +96,6 @@
   (if (= example "list")
     (doseq [e (sort (keys examples))]
       (println e))
-    (swap! sketchstate assoc :trajectory (get-trajectory example))))
+    (do
+      (swap! sketchstate assoc :trajectory (get-trajectory example))
+      (run-sketch example))))
