@@ -92,4 +92,7 @@
 (defn -main
   "I launch sketch"
   [example & other-args]
-  (swap! sketchstate assoc :trajectory (get-trajectory example)))
+  (if (= example "list")
+    (doseq [e (sort (keys examples))]
+      (println e))
+    (swap! sketchstate assoc :trajectory (get-trajectory example))))
