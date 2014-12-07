@@ -12,6 +12,7 @@
     "chapter2-po4" {:f chapter2/po4 :x0 [5.0 0.0 0.0]}
     "moore-spiegel" {:f chapter3/moore-spiegel :x0 [4.0 7.0 2.0]}
     "chapter3-sqm" {:f chapter3/sqm :x0 [1.0 -0.8 0.0]}
+    "halvorsen" {:f chapter3/halvorsen :x0 [-6.4 0.0 0.0]}
     })
 
 (defn setup []

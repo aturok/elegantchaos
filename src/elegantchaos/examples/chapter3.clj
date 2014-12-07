@@ -12,3 +12,13 @@
 	(fn [t [x y z]] (+ (- (* x x)) (- y)))
 	(fn [t [x y z]] (+ 1.7 (* 1.7 x) y))
 	])
+
+(defn halvorsen-f [a]
+	(fn [t [x y z]] (+ (- (* a x)) (- (* 4 y)) (- (* 4 z)) (- (* y y)))))
+
+(def halvorsen
+	(let [f (halvorsen-f 1.3)]
+		[f
+		 (fn [t [x y z]] (f t [y z x]))
+		 (fn [t [x y z]] (f t [z x y]))
+		 ]))
